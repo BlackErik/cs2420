@@ -29,23 +29,24 @@ def infixToPostfix( infix ):
         elif c == 'x':
             postfix += c
         elif c in "+-":
-            if not s.IsEmpty():
-                while s.Top() in "+-*/":
-                    postfix += s.Pop()
+            while not s.IsEmpty() and s.Top() in "+-*/":
+                postfix += s.Pop()
             s.Push( c )
         elif c in "*/":
-            if not s.IsEmpty():
-                if s.Top() == "*" or s.Top() == "/":
-                    postfix += s.Pop()
+            while not s.IsEmpty() and (s.Top() == "*" or s.Top() == "/"):
+                postfix += s.Pop()
             s.Push( c )
         elif c == '(':
             s.Push( c )
         elif c == ')':
-            while s.Top() != '(':
+            while not s.IsEmpty() and s.Top() != '(':
                 postfix += s.Pop()
-            s.Pop()
+            if not s.IsEmpty() and s.Top() == '(':
+                s.Pop()
+    
     while not s.IsEmpty():
         postfix += s.Pop()
+    
     return postfix
 
 def evaulatePostfix( postfix, x ):
