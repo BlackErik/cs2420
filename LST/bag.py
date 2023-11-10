@@ -1,96 +1,96 @@
 class Node:
-    def __init__(self,item):
-        self.L = None
-        self.R = None
+    def __init__( self, item ):
+        self.mL = None
+        self.mR = None
         self.mItem = item
 
 class BST:
 
-    def __init__(self):
+    def __init__( self ):
         self.mRoot = None
 
-    def Insert(self,item):
-        if self.Exists(item):
+    def Insert( self, item ):
+        if self.Exists( item ):
             return False
-        node = Node(item)
-        self.mRoot = self.InsertRecurse(node,self.mRoot)
+        n = Node( item )
+        self.mRoot = self.InsertRecurse( n, self.mRoot )
         return True
     
-    def InsertRecurse(self,node,current):
+    def InsertRecurse( self, n,current ):
         if current is None:
-            return node
-        if node.mItem < current.mItem:
-            current.L = self.InsertRecurse(node,current.L)
-        if node.mItem > current.mItem:
-            current.R = self.InsertRecurse(node,current.R)
+            return n
+        if n.mItem < current.mItem:
+            current.mL = self.InsertRecurse( n, current.mL )
+        if n.mItem > current.mItem:
+            current.mR = self.InsertRecurse( n, current.mR )
         return current
     
-    def Exists(self,item):
-        return self.ExistsRecurse(item,self.mRoot)
+    def Exists( self, item ):
+        return self.ExistsRecurse( item, self.mRoot )
     
-    def ExistsRecurse(self,item,current):
+    def ExistsRecurse( self, item,current ):
         if current is None:
             return False
         elif item < current.mItem:
-            return self.ExistsRecurse(item,current.L)
+            return self.ExistsRecurse( item, current.mL )
         elif item > current.mItem:
-            return self.ExistsRecurse(item,current.R)
+            return self.ExistsRecurse( item, current.mR )
         else:
             return True
     
-    def __iter__(self):
-        yield from self.IterRecursive(self.mRoot)
+    def __iter__( self ):
+        yield from self.ItermRecursive( self.mRoot )
     
-    def IterRecursive(self,current):
+    def ItermRecursive( self, current ):
         if current is not None:
-            yield from self.IterRecursive(current.L)
+            yield from self.ItermRecursive( current.mL )
             yield current.mItem
-            yield from self.IterRecursive(current.R)
+            yield from self.ItermRecursive( current.mR )
 
-    def Delete(self,item):
-        if not self.Exists(item):
+    def Delete( self, item ):
+        if not self.Exists( item ):
             return False
-        self.mRoot = self.DeleteRecurse(item,self.mRoot)
+        self.mRoot = self.DeleteRecurse( item, self.mRoot )
         return True
 
-    def DeleteRecurse(self,item,current):
+    def DeleteRecurse( self, item,current ):
         if item < current.mItem:
-            current.L = self.DeleteRecurse(item,current.L)
+            current.mL = self.DeleteRecurse( item, current.mL )
         if item > current.mItem:
-            current.R = self.DeleteRecurse(item,current.R)
+            current.mR = self.DeleteRecurse( item, current.mR )
         else:
-            if current.L is None and current.R is None:
+            if current.mL is None and current.mR is None:
                 return None
-            elif current.L is not None and current.R is None:
-                return current.L
-            elif current.L is None and current.R is not None:
-                return current.R
+            elif current.mL is not None and current.mR is None:
+                return current.mL
+            elif current.mL is None and current.mR is not None:
+                return current.mR
             else:
-                nextItem = current.R
-                while nextItem.L:
-                    nextItem = nextItem.L
+                nextItem = current.mR
+                while nextItem.mL:
+                    nextItem = nextItem.mL
                 current.mItem = nextItem.mItem
-                current.R = self.DeleteRecurse(nextItem.mItem, current.R)
+                current.mR = self.DeleteRecurse( nextItem.mItem,  current.mR )
         return current
 
-    def Size(self):
-        return self.SizeRecurse(self.mRoot)
+    def Size( self ):
+        return self.SizeRecurse( self.mRoot )
         
-    def SizeRecurse(self,current):
+    def SizeRecurse( self, current ):
         if not current:
             return 0
         else:
-            return 1 + self.SizeRecurse(current.L)+self.SizeRecurse(current.R)
+            return 1 + self.SizeRecurse( current.mL )+self.SizeRecurse(current.mR)
     
-    def Retrieve(self,item):
-        if not self.Exists(item):
+    def Retrieve( self, item ):
+        if not self.Exists( item ):
             return False
-        return self.RetrieveRecurse(item,self.mRoot)
+        return self.mRetrieveRecurse( item, self.mRoot )
     
-    def RetrieveRecurse(self,item,current):
+    def mRetrieveRecurse( self, item,current ):
         if item < current.mItem:
-            return self.RetrieveRecurse(item,current.L)
+            return self.RetrieveRecurse( item, current.mL )
         elif item > current.mItem:
-            return self.RetrieveRecurse(item,current.R)
+            return self.RetrieveRecurse( item, current.mR )
         else:
             return current.mItem
