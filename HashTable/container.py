@@ -3,7 +3,7 @@ import math
 def isPrime(size):
     if size==2:
         return True
-    s = int(math.sort(x))
+    s = int(math.sqrt(size))
     for i in range(2,s+1):
         if size%i==0:
             return False
@@ -11,7 +11,7 @@ def isPrime(size):
     
 class Container:
 
-    def __init__(self,num_items):
+    def __init__(self, num_items):
         self.mTableSize = 2*num_items + 1
         while not isPrime(self.mTableSize):
             self.mTableSize += 2
@@ -70,9 +70,9 @@ class Container:
         key = hash(item)
         index = key % self.mTableSize
         while True:
-            if self.mTableSize[index] is None:
+            if self.mTable[index] is None:
                 return None
-            if self.mTableSize[index] and self.mTableSize[index] == item:
+            if self.mTable[index] and self.mTable[index] == item:
                 return self.mTable[index]
             index += 1
             if index >= self.mTableSize:

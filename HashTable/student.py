@@ -9,3 +9,6 @@ class Student:
 
     def __eq__( self, rhs ):
         return self.mSsn == rhs.mSsn
+
+    def __hash__(self ):
+        return int(self.mSsn.replace('-',''))

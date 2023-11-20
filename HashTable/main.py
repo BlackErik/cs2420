@@ -6,7 +6,14 @@ def main():
 
     #Insert
     timeStart = time.time()
-    bag = container.Container()
+    fin = open( "FakeNames.txt")
+    count = 0
+    for line in fin:
+        count +=1
+
+    bag = container.Container( count )
+    fin.close()
+
     fin = open( "FakeNames.txt")
     for line in fin:
         words = line.split()
